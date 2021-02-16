@@ -1,0 +1,36 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.similar-product-container {
+  display: flex;
+}
+.similar-product-container div {
+  padding: 10px;
+}
+
+.similar-product-box {
+  flex: 1;
+}
+
+body {
+  font-size: 14px;
+}
+
+.similar-product-box img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+h1 {
+  color: #800080;
+  font-size: 26px;
+}
+
+h2 {
+  color: #800080;
+  font-size: 17px;
+}
