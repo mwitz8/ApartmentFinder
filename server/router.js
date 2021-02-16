@@ -6,27 +6,23 @@ const axios = require('axios');
 const app = express.Router();
 
 app.get('/location', (req, res) => {
-  var getApartments = function(url) {
-    axios.get(url)
+  var getApartments = function(city, state) {
+    axios.get(`https://www.apartments.com/${city} ${state}`)
       .then(function(response) {
         var html = response.data;
         var $ = cheerio.load(html);
-        var apartmentLinks = $('.property-link').attr('href');
-        if (apartmentLinks) {
-          //details = details.split('\n');
-          var result = {
-          }
-          res.send(apartmentLinks);
-        } else {
-          console.log('trying again');
-          getApartment(url);
-        }
+        var apartmentLinks = [];
+        $('.property-link').each( (index, value) => {
+          var apartmentLink = $(value).attr('href');
+          apartmentLinks.push(apartmentLink);
+        });
+        res.send(apartmentLinks);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-  getApartments(req.query.url);
+    }
+  getApartments(req.query.city, req.query.state);
 })
 
 app.get('/apartment', (req, res) => {
