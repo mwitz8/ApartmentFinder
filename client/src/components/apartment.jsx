@@ -9,7 +9,7 @@ class Apartment extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/api/apartment', { params: { url: this.props.url } })
+    axios.get('http://localhost:3000/apartment', { params: { url: this.props.url } })
       .then((result) => {
         this.setState(result.data);
       })
@@ -23,7 +23,7 @@ class Apartment extends React.Component {
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' '+time;
-    axios.post('http://localhost:3000/api/apartmentView', {}, { params: {url: this.props.url, time: dateTime}})
+    axios.post('http://localhost:3000/apartmentView', {}, { params: {url: this.props.url, time: dateTime}})
       .catch(function (error) {
         console.log(error);
       });

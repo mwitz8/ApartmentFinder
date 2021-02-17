@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const apartmentSchema =  new mongoose.Schema({
   url: String,
-  time: Number
+  time: String
 });
 
 const Apartment = mongoose.model('Apartment', apartmentSchema);

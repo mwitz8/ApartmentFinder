@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   loadApartments() {
-    axios.get('http://localhost:3000/api/location', { params: { city: this.state.city, state: this.state.state } })
+    axios.get('http://localhost:3000/location', { params: { city: this.state.city, state: this.state.state } })
       .then((result) => {
         this.setState({apartments: result.data, apartmentsLoaded: true});
       })
