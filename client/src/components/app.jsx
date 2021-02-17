@@ -7,30 +7,51 @@ class App extends React.Component {
     super(props);
     this.state = {
       city: '',
-      state: 'AL'
+      state: 'AL',
+      address: '',
+      apartments: [],
+      apartmentsLoaded: false
     };
   }
   handleChangeCity(event) {
     this.setState({
       city: event.target.value
-    }, () => {console.log(this.state);});
+    });
   }
 
   handleChangeState(event) {
     this.setState({
       state: event.target.value
-    }, () => {console.log(this.state);});
+    });
   }
 
-  componentDidMount() {
+  handleChangeAddress(event) {
+    this.setState({
+      address: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.loadApartments();
+  }
+
+  loadApartments() {
+    axios.get('http://localhost:3000/api/location', { params: { city: this.state.city, state: this.state.state } })
+      .then((result) => {
+        this.setState({apartments: result.data, apartmentsLoaded: true});
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   render() {
     return(
       <div>
-        <form>
+        <form onSubmit={this.state.apartmentsLoaded ? null :this.handleSubmit.bind(this)}>
           <div>
-            <label for="name">City of Interest: </label>
+            <label>City of Interest: </label>
             <input type="text" value={this.state.city} onChange={this.handleChangeCity.bind(this)}></input>
             <select value={this.state.state} onChange={this.handleChangeState.bind(this)}>
               <option value="AL">AL</option>
@@ -84,9 +105,14 @@ class App extends React.Component {
               <option value="WI">WI</option>
               <option value="WY">WY</option>
             </select>
+            <input type="submit" value={this.state.apartmentsLoaded ? 'New Search' : 'Submit'}></input>
           </div>
+          {/* <div>
+            <label>Current Address: </label>
+            <input type="text" value={this.state.address} onChange={this.handleChangeAddress.bind(this)}></input>
+          </div> */}
         </form>
-        <ApartmentsList city={this.state.city} state={this.state.state} />
+        <ApartmentsList apartments={this.state.apartments} />
       </div>
     );
   }

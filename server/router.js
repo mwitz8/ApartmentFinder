@@ -14,7 +14,9 @@ app.get('/location', (req, res) => {
         var apartmentLinks = [];
         $('.property-link').each( (index, value) => {
           var apartmentLink = $(value).attr('href');
-          apartmentLinks.push(apartmentLink);
+          if(!apartmentLinks.includes(apartmentLink)) {
+            apartmentLinks.push(apartmentLink);
+          }
         });
         res.send(apartmentLinks);
       })
@@ -63,6 +65,13 @@ app.get('/apartment', (req, res) => {
   // database.readAllProducts((results) => {
   //   res.send(results);
   // });
+})
+
+app.post('/apartmentView', (req, res) => {
+  console.log('here');
+  console.log('time: ', req.query.time);
+  database.addApartmentView(req.query.url, req.query.time);
+  res.send(req.query.time);
 })
 
 module.exports = app;
